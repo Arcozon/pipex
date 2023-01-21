@@ -6,7 +6,7 @@
 /*   By: geudes <geudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:37:53 by geudes            #+#    #+#             */
-/*   Updated: 2023/01/17 17:43:47 by geudes           ###   ########.fr       */
+/*   Updated: 2023/01/21 00:53:02 by geudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	free_split(char **split)
 	int	i;
 
 	i = -1;
-	while (split[++i])
+	while (split && split[++i])
 		free(split[i]);
 	free(split);
 }
