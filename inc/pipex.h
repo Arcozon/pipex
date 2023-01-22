@@ -6,7 +6,7 @@
 /*   By: geudes <geudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:33:28 by geudes            #+#    #+#             */
-/*   Updated: 2023/01/21 02:57:44 by geudes           ###   ########.fr       */
+/*   Updated: 2023/01/22 01:28:04 by geudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,28 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
 
+typedef struct s_pipex
+{
+	int			**pipes;
+	pid_t		*pids;
+	int			nb_cmd;
+	int			input;
+	int			output;
+	int			infile;
+	int			outfile;
+	char		**path;
+}				t_pipex;
+
 /*--------------------Env----------------------*/
 char			**get_path(char **env);
-char			*get_exec(char **env, char *cmd);
+char			*get_exec(char **path, char *cmd);
+
+/*--------------------Pipex--------------------*/
+t_pipex			*init_pipex(int nb_cmd, char **av, char **env);
 
 /*-------------------Utils---------------------*/
 unsigned int	ft_strlen(const char *caca);

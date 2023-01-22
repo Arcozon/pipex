@@ -6,20 +6,18 @@
 /*   By: geudes <geudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:40:12 by geudes            #+#    #+#             */
-/*   Updated: 2023/01/21 00:43:56 by geudes           ###   ########.fr       */
+/*   Updated: 2023/01/22 00:46:04 by geudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_exec(char **env, char *cmd)
+char	*get_exec(char **path, char *cmd)
 {
 	char	*actual_path;
 	char	*buffer;
-	char	**path;
 	int		i;
 
-	path = get_path(env);
 	i = -1;
 	while (path && path[++i])
 	{
@@ -30,7 +28,6 @@ char	*get_exec(char **env, char *cmd)
 			return (free_split(path), actual_path);
 		free(actual_path);
 	}
-	free_split(path);
 	return (cmd);
 }
 

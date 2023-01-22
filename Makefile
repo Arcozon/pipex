@@ -1,4 +1,4 @@
-S_SRC = main.c  split.c  utils.c  env_bs.c
+S_SRC = main.c  split.c  utils.c  env_bs.c  t_pipex.c
 D_SRC = ./src/
 SRC = $(addprefix ${D_SRC}, ${S_SRC})
 
