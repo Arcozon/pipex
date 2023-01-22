@@ -6,7 +6,7 @@
 /*   By: geudes <geudes@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 14:33:28 by geudes            #+#    #+#             */
-/*   Updated: 2023/01/22 01:28:04 by geudes           ###   ########.fr       */
+/*   Updated: 2023/01/22 02:51:34 by geudes           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char			*get_exec(char **path, char *cmd);
 
 /*--------------------Pipex--------------------*/
 t_pipex			*init_pipex(int nb_cmd, char **av, char **env);
-
+void			free_pipex(int nb_pipes, t_pipex *pipex);
 /*-------------------Utils---------------------*/
 unsigned int	ft_strlen(const char *caca);
 char			**ft_split(char const *s, char c);

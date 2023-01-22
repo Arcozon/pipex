@@ -14,8 +14,7 @@
 
 void	free_pipex(int nb_pipes, t_pipex *pipex)
 {
-	nb_pipes++;
-	while (nb_pipes--)
+	while (--nb_pipes >= 0)
 		(close(pipex->pipes[nb_pipes][0]), close(pipex->pipes[nb_pipes][1]),
 				free(pipex->pipes[nb_pipes]));
 	free_split(pipex->path);
