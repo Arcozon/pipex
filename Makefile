@@ -3,11 +3,11 @@ NAME =  pipex
 SRC = 
 D_SRC = ./src/
 
+D_INC = ./inc/  
+
 D_BUILD = ./.build/
 OBJ =  $(addprefix $(D_BUILD), $(SRC:.c=.o))
-B_OBJ = $(addprefix $(D_BUILD), $(BSRC:.c=.o))
 
-S_INC =  
 
 CC =  cc
 FLAGS = -Wall -Wextra -Werror -MMD
@@ -17,10 +17,6 @@ RM =  rm -rf
 all:	$(NAME)
 
 $(NAME):	$(OBJ)
-	
-
-bonus:	$(B_OBJ) $(OBJ)
-	
 
 $(OBJ): $(D_BUILD)%.o:	$(D_SRC)%.c
 	@mkdir -p $(@D)
