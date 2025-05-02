@@ -1,39 +1,41 @@
-S_SRC = main.c  split.c  utils.c  env_bs.c  t_pipex.c
+NAME =  pipex
+
+SRC = 
 D_SRC = ./src/
-SRC = $(addprefix ${D_SRC}, ${S_SRC})
 
-S_OBJ = ${S_SRC:.c=.o}
-D_OBJ = ./obj/
-OBJ = $(addprefix ${D_OBJ}, ${S_OBJ})
+D_BUILD = ./.build/
+OBJ =  $(addprefix $(D_BUILD), $(SRC:.c=.o))
+B_OBJ = $(addprefix $(D_BUILD), $(BSRC:.c=.o))
 
-S_INC = pipex.h
-D_INC = ./inc/
-INC = $(addprefix ${D_INC}, ${S_INC})
+S_INC =  
 
+CC =  cc
+FLAGS = -Wall -Wextra -Werror -MMD
 
-NAME = pipex
+RM =  rm -rf
 
-CC = cc
+all:	$(NAME)
 
-FLAGS = -Wall -Wextra -Werror -g
+$(NAME):	$(OBJ)
+	
 
-${D_OBJ}%.o : ${D_SRC}%.c ${INC}
-	${CC} ${FLAGS} -I${D_INC} -c $< -o $@
+bonus:	$(B_OBJ) $(OBJ)
+	
 
-all	: ${NAME}
+$(OBJ): $(D_BUILD)%.o:	$(D_SRC)%.c
+	@mkdir -p $(@D)
+	$(CC) $(FLAGS) -c $< -o $@
 
-${NAME}	:	${D_OBJ}  ${OBJ}
-	${CC} ${FLAGS} ${OBJ} ${LIBFT}-o${NAME}
+clean:
+	$(RM) $(D_BUILD)
 
-${D_OBJ}:
-	mkdir -p ${D_OBJ}
+fclean: clean
+	$(RM) $(NAME)
 
-clean :
-	rm -f ${OBJ}
+re: fclean
+	make all
 
-fclean :
-	rm -f ${NAME} ${OBJ}
+-include DEPS = $(addprefix $(D_BUILD), $(SRC:.c=.d))
 
-re : fclean all
+.PHONY: re fclean clean all bonus $(CC) $(FLAGS) $(RM) $(AR)
 
-.PHONY : all clean fclean re
