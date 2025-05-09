@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/02 15:29:15 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/09 15:42:21 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,37 @@
 # include <unistd.h>
 # include <fcntl.h>
 
-typedef struct s_pipex
-{
-	char	*infile;
-	char	*outfile;
-	
-}	t_px;
+# define HEREDOC "here_doc"
 
+# ifndef PPX_BONUS
+#  define PPX_BONUS 0
+# endif
+
+typedef struct s_cmd
+{
+	char	*av_i;
+	char	*path;
+	char	**av;
+	
+	int		i_fd;
+	int		o_fd;
+
+	int		pid;
+}	t_cmd;
+
+typedef struct	s_pipex;
+{
+	char	*av_0;
+
+	char	*infile;
+	char	heredoc:1;
+	char	*outfile;
+	char	*path;
+
+	t_cmd	*cmds;
+	size_t	nb_cmds;
+	int		pipe[2];
+	unsigned char	r_value;
+}	t_px;
 
 #endif
