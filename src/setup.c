@@ -6,38 +6,11 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:18:05 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/09 16:28:44 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/09 17:07:34 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
- t_cmd	*init_cmds(char	**av, size_t nb_cmds, char **env)
- {
-	(void)env;
-	t_cmd	*cmds;
-	size_t	i;
-
-	cmds = malloc(sizeof(t_cmd) * nb_cmds);
-	if (!cmds)
-		return (0);
-	i = 0;
-	while (i < nb_cmds)
-	{
-		cmds[i].av_i = av[i];
-		cmds[i].ifd = -1;
-		cmds[i].ofd = -1;
-		cmds[i].pid = -1;
-		if (!init_one_cmd(cmds + i, av[i], env))
-		{
-			while (i)
-				free_cmd(cmds[--i]);
-			free(cmds);
-			return (0);
-		}
-		++i;
-	}
- }
 
 char	*find_path(char **env)
 {
