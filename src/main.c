@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:37 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/08 16:17:06 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/12 11:55:12 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ int	main(int ac, char *av[], char *env[])
 	t_px	ppx;
 
 	if (!init_pipex(&ppx, ac, av, env))
+		;
 	return (0);
 }

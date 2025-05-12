@@ -6,50 +6,72 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:07:10 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/09 17:09:39 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/12 16:26:46 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	free_cmd(t_cmd cmd)
+void	free_split(char **split)
 {
 	size_t	i;
 
-	if (cmd.av)
-	{
-		i = 0;
-		while (cmd.av[i])
-			free(cmd.av[i++]);
-		free(cmd.av);
-		
-	}
-	free(cmd.path);
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);	
 }
 
-t_cmd	*init_cmds(char	**av, size_t nb_cmds, char **env)
+void	free_cmd(t_cmd *cmd)
 {
-	(void)env;
-	t_cmd	*cmds;
 	size_t	i;
 
-	cmds = malloc(sizeof(t_cmd) * nb_cmds);
-	if (!cmds)
+	if (!cmd)
+		return ;
+	free(cmd->path);
+	free(cmd);
+}
+
+t_cmd	*empty_new_cmd(char *pre_split)
+{
+	t_cmd	*new;
+
+	new = malloc(sizeof(t_cmd));
+	if (!new)
 		return (0);
+	new->pre_split = pre_split;
+	new->ifd = -1;
+	new->ofd = -1;
+	new->args = 0;
+	new->path = 0;
+	new->pid = -1;
+	new->next = 0;
+	return (new);
+}
+
+t_cmd	*new_cmd(char *pre_split, char **env, char *path)
+{
+	t_cmd	*new;
+
+	new = empty_new_lst(pre_split);
+	if (!new)
+		return (0);
+	// new->args = 
+}
+
+t_cmd	*init_cmds(char	**av, size_t nb_cmds, char **env, char *path)
+{
+	size_t	i;
+	t_cmd	*lst;
+	t_cmd	*new;
+
+	lst = 0;
 	i = 0;
 	while (i < nb_cmds)
 	{
-		cmds[i].av_i = av[i];
-		cmds[i].ifd = -1;
-		cmds[i].ofd = -1;
-		cmds[i].pid = -1;
-		if (!init_one_cmd(cmds + i, av[i], env))
-		{
-			while (i)
-				free_cmd(cmds[--i]);
-			free(cmds);
-			return (0);
-		}
+		new = new_cmd(av[i], env, path);
 		++i;
 	}
 }

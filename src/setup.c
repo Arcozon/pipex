@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:18:05 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/09 17:07:34 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/12 12:04:27 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*find_path(char **env)
 	return (0);
 }
 
+// 0 on success
 int	init_pipex(t_px *ppx,int ac,char *av[],char *env[])
 {
 	ppx->errors = 0;
@@ -37,9 +38,8 @@ int	init_pipex(t_px *ppx,int ac,char *av[],char *env[])
 	ppx->infile = av[1 + ppx->heredoc];
 	ppx->outfile = av[ac - 1];
 	ppx->path = find_path(env);
-	ppx->nb_cmds = ac - 3 - ppx->heredoc;
-	ppx-cmds = init_cmds(av + 2 + ppx->heredoc, ppx->nb_cmds, env);
+	ppx->cmds = init_cmds(av + 2 + ppx->heredoc, ac - 3 - ppx->heredoc, env, ppx->path);
 	if (!ppx->cmds)
-		return (ppc->errors |= F_MLLC, 1);
+		return (ppx->errors |= F_MLLC, 1);
 	return (0);
 }

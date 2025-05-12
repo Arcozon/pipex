@@ -6,26 +6,25 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:21:28 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/08 18:50:44 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/12 15:25:57 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strncmp(char *s1, char *s2, size_t n)
-
+int	ft_strncmp_weq(char *name, char *var, size_t n)
 {
-	while (n && *s1)
+	while (n && *name)
 	{
-		if (*s1 != *s2)
+		if (*name != *var)
 			return (1);
 		--n;
-		++s1;
-		++s2;
+		++name;
+		++var;
 	}
-	if (!s1)
-		return (1);
-	return (0);
+	if (!n && *var == '=')
+		return (0);
+	return (1);
 }
 
 size_t	ft_strlen(char *str)
@@ -43,7 +42,7 @@ int	slashchr(char *str)
 	while (*str)
 	{
 		if (*str == '/')
-			return ;
+			return (1);
 		++str;
 	}
 	return (0);
