@@ -5,87 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 17:57:43 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/14 16:02:10 by gaeudes          ###   ########.fr       */
+/*   Created: 2025/05/17 16:27:52 by gaeudes           #+#    #+#             */
+/*   Updated: 2025/05/17 16:38:13 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "pipex.h"
+#include "pipex.h"
 
-#include <unistd.h>
-
-// neg error, 0 success, pos not found
-int	read_start_line(int fd, char *limiter, char *c, int *br)
+int	rm_quotes_limiter(char *limiter)
 {
-	size_t	i_l;
+	int		need_exp;
+	char	quote;
+	int		i;
+	int		d_cpy;
 
-	i_l = 0;
-	while (1)
+	need_exp = 1;
+	i = 0;
+	d_cpy = 0;
+	while (limiter[i])
 	{
-		*br = read(STDIN_FILENO, c, 1);
-		if (!*br)
-			continue ;
-		if (*br < 0)
-			return (-1);
-		if (!limiter[i_l] && *c == '\n')
-			return (0);
-		if (*c != limiter[i_l])
-			break ;
-		++i_l;
-	}
-	write(fd, limiter, i_l);
-	write(fd, c, 1);
-	return (1);
-}
-
-int	read_stdin(int fd, char *limiter)
-{
-	char	c;
-	int		br;
-
-	c = '\n';
-	br = 1;
-	while (1)
-	{
-		if (br < 0)
-			return (-1);
-		if (c == '\n')
+		if (limiter[i] == '\'' || limiter[i] == '"')
 		{
-			if (!read_start_line(fd, limiter, &c, &br))
+			need_exp = (++d_cpy, 0);
+			quote = limiter[i];
+			while (limiter[++i] && limiter[i] != quote)
+				limiter[i - d_cpy] = limiter[i];
+			if (limiter[i])
 				break ;
-			continue ;
+			++d_cpy;
 		}
-		br = read(STDIN_FILENO, &c, 1);
-		if (br == 1)
-			write(fd, &c, 1);
+		else
+			limiter[i - d_cpy] = limiter[i];
+		++i;
 	}
-	return (0);
+	return (limiter[i - d_cpy] = 0, need_exp);
 }
 
-int	heredoc(char *limiter)
+int	heredoc(char *limiter, char *p_name, char **env)
 {
-	int	here_p[2];
+	int	fd_out;
+	int	need_exp;
+	int	mlv;
 
-	if (pipe(here_p) < 0 || read_stdin(here_p[1], limiter))
-		return (-1);
-	close(here_p[1]);
-	return (here_p[0]);
+	need_exp = rm_quotes_limiter(limiter);
+	mlv = 0;
+	fd_out = heredoc_no_exp(limiter, p_name, &mlv);
+	printf("--%d--\n", mlv);
+	if (fd_out >= 0 && mlv && need_exp)
+		fd_out = heredoc_exp(fd_out, env, mlv);
+	return (fd_out);
 }
+// #include <stdio.h>
 
-int main()
-{
-	int	fd = heredoc("123");
-	
-	if (fd >= 0)
-	{
-		char	txt[512];
-		int		br;
-		do
-		{
-			br = read(fd, txt, 512);
-			if (br < 0)
-				return (write(2, "Merde\n", 6), 1);
-			write(1, txt, br);
-		}	while (br);
-	}
-}
+// int main(int ac, char **av, char **env)
+// {
+// 	char	lim[] = "'abc'\"123\"%";
+// 	int	fd = heredoc(lim, ft_strrchr(av[0], '/') + 1, env);
+// 	(void)ac;
+// 	if (fd >= 0)
+// 	{
+// 		char	txt[512];
+// 		int		br;
+// 		do
+// 		{
+// 			br = read(fd, txt, 512);
+// 			if (br < 0)
+// 				return (write(2, "Merde\n", 6), 1);
+// 			write(1, txt, br);
+// 		}	while (br);
+		
+// 	}
+// }

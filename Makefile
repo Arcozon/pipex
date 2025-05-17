@@ -1,13 +1,24 @@
 NAME =  pipex
 
-SRC = 
-D_SRC = ./src/
+S_SRC_SPLIT_CMD =  cpy_arg.c  len_dollar.c  len_one_arg.c  mllc_all.c
+D_SRC_SPLIT_CMD =  split_cmd/
+SRC_SPLIT_CMD =  $(addprefix $(D_SRC_SPLIT_CMD), $(S_SRC_SPLIT_CMD))
 
-D_INC = ./inc/  
+S_SRC_CMDS =  $(SRC_SPLIT_CMD)  find_exe.c  init_cmd.c
+D_SRC_CMDS =  cmds/
+SRC_CMDS =  $(addprefix $(D_SRC_CMDS), $(S_SRC_CMDS))
 
-D_BUILD = ./.build/
+S_SRC_HEREDOC =  heredoc.c  heredoc_exp.c  heredoc_no_exp.c
+D_SRC_HEREDOC =  heredoc/
+SRC_HEREDOC =  $(addprefix $(D_SRC_HEREDOC), $(S_SRC_HEREDOC))
+
+SRC =  $(SRC_HEREDOC)  $(SRC_CMDS)  main.c  setup.c  utils2.c  utils.c  error.c  free.c
+D_SRC =  src/
+
+D_INC = inc/
+
+D_BUILD = .build/
 OBJ =  $(addprefix $(D_BUILD), $(SRC:.c=.o))
-
 
 CC =  cc
 FLAGS = -Wall -Wextra -Werror -MMD
@@ -15,12 +26,15 @@ FLAGS = -Wall -Wextra -Werror -MMD
 RM =  rm -rf
 
 all:	$(NAME)
+	echo $(OBJ)
+	echo $(SRC)
 
 $(NAME):	$(OBJ)
+	$(CC) -o$@ $^
 
 $(OBJ): $(D_BUILD)%.o:	$(D_SRC)%.c
 	@mkdir -p $(@D)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -I$(D_INC) -c $< -o $@ 
 
 clean:
 	$(RM) $(D_BUILD)
@@ -33,5 +47,5 @@ re: fclean
 
 -include DEPS = $(addprefix $(D_BUILD), $(SRC:.c=.d))
 
-.PHONY: re fclean clean all bonus $(CC) $(FLAGS) $(RM) $(AR)
+.PHONY: re fclean clean all $(CC) $(FLAGS) $(RM)
 

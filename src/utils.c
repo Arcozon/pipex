@@ -6,23 +6,23 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:21:28 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/12 15:25:57 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/17 17:14:46 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	ft_strncmp_weq(char *name, char *var, size_t n)
+int	ft_strncmp_weq(char *name, char *env_var, size_t n)
 {
 	while (n && *name)
 	{
-		if (*name != *var)
+		if (*name != *env_var)
 			return (1);
 		--n;
 		++name;
-		++var;
+		++env_var;
 	}
-	if (!n && *var == '=')
+	if (!n && *env_var == '=')
 		return (0);
 	return (1);
 }
@@ -32,7 +32,7 @@ size_t	ft_strlen(char *str)
 	size_t	len;
 
 	len = 0;
-	while(str[len])
+	while (str[len])
 		++len;
 	return (len);
 }
@@ -48,14 +48,33 @@ int	slashchr(char *str)
 	return (0);
 }
 
-char	*ft_strjoin_with_slash(char const *s1, char const *s2)
+char	*ft_strrchr(char *str, char c)
+{
+	size_t	i;
+
+	i = ft_strlen(str);
+	if (!c)
+		return (str + i);
+	while (i--)
+		if (str[i] == c)
+			return (str + i);
+	return (0);
+}
+
+char	*ft_substrjoin_with_slash(char *s1, char *s2,
+		size_t start, size_t len)
 {
 	char	*res;
-	int		i;
-	int		j;
+	size_t	i;
+	size_t	j;
 
+	j = ft_strlen(s2);
+	if (start > j)
+		start = j;
+	if (start + len > j)
+		len = j - start ;
 	res = malloc((ft_strlen((char *)s1)
-				+ ft_strlen((char *)s2) + 1 + 1) * sizeof(char));
+				+ len + 1 + 1) * sizeof(char));
 	if (!res)
 		return (0);
 	i = 0;
@@ -66,7 +85,7 @@ char	*ft_strjoin_with_slash(char const *s1, char const *s2)
 	}
 	res[i++] = '/';
 	j = 0;
-	while (s2[j])
+	while (j < len)
 	{
 		res[i + j] = s2[j];
 		++j;

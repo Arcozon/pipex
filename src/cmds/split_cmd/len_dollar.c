@@ -6,23 +6,19 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 12:45:00 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/12 16:09:06 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/17 16:37:34 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	is_var_name(char c)
-{
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')
-		|| (c >= '0' && c <= '9') || c == '_');
-}
 
 size_t	len_var_name(char *str)
 {
 	size_t	len;
 
 	len = 0;
+	if (str[len] >= '0' && str[len] <= '9')
+		return (1);
 	while (is_var_name(str[len]))
 		++len;
 	return (len);

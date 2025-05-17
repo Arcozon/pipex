@@ -6,23 +6,11 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 16:09:53 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/12 19:12:59 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/17 17:47:24 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	free_split(char **split)
-{
-	size_t	i;
-
-	if (!split)
-		return ;
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
-}
 
 char	**mllc_all(char *str, char **env)
 {
