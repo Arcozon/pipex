@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/17 17:49:18 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:33:33 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <stdio.h>
+# include <errno.h>
 
 # define PATH_EQ "PATH"
 # define PATH_EQ_LEN 4
@@ -47,12 +49,16 @@ typedef struct s_cmd
 
 typedef struct s_pipex
 {
-	char			*av_0;
+	char			*p_name;
 
 	char			*infile;
 	char			heredoc:1;
+	int				ifd;
 	char			*outfile;
+	int				ofd;
+
 	char			*path;
+	char			**env;
 
 	t_cmd			*cmds;
 

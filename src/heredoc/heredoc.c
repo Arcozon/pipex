@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:27:52 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/17 16:38:13 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/18 14:50:59 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	heredoc(char *limiter, char *p_name, char **env)
 	need_exp = rm_quotes_limiter(limiter);
 	mlv = 0;
 	fd_out = heredoc_no_exp(limiter, p_name, &mlv);
-	printf("--%d--\n", mlv);
+	// printf("--%d--\n", mlv);
 	if (fd_out >= 0 && mlv && need_exp)
 		fd_out = heredoc_exp(fd_out, env, mlv);
 	return (fd_out);
