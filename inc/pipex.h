@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/18 18:33:33 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/18 18:56:23 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ int		slashchr(char *str);
 
 void	putstrerr(char *err);
 void	err_expected_delim(char *limiter, char *p_name, int to_print);
+void	err_file(char *f_name, char *p_name);
 
 void	free_split(char **split);
 void	free_cmd(t_cmd *cmd);
