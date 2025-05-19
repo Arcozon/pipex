@@ -6,13 +6,22 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:37 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 08:14:33 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:20:17 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
 // 0 on error 1 on succ
+void	close_fd(int *fd)
+{
+	if (*fd >= 0)
+	{
+		close(*fd);
+		*fd = -1;
+	}
+}
+
 int	open_fd(char *f_name, int *fd, int mode, t_px *px)
 {
 	if (*fd >= 0)
@@ -35,25 +44,15 @@ void	open_files(t_px *px)
 			px->errors |= E_HRDC;
 	}
 	else
-	{
-		px->ifd = open(px->infile, O_RDONLY);
-		if (px->ifd < 0)
-		{
-			px->errors |= E_OPEN;
-			err_file(px->infile, px->p_name);
-		}
-	}
-	px->ofd = open(px->outfile, O_WRONLY); // append for heredoxc mod
-	if (px->ifd < 0)
-	{
-		px->errors |= E_OPEN;
-		err_file(px->outfile, px->p_name);
-	}
+		open_fd(px->infile, &(px->ifd), O_RDONLY, px);
+	open_fd(px->outfile, &(px->ofd), O_WRONLY | O_CREAT
+			| (int [2]){O_TRUNC, O_APPEND}[px->heredoc], px);
 }
 
 void	exec_pipex(t_px *px)
 {
 	open_files(px);
+	exec_cmds(px);
 }
 
 int	main(int ac, char *av[], char *env[])
@@ -62,10 +61,7 @@ int	main(int ac, char *av[], char *env[])
 
 	if (!init_pipex(&ppx, ac, av, env))
 		exec_pipex(&ppx);
-	if (ppx.errors)
-	{
-		// print_errors(ppx.errors);
-		return (ppx.errors);
-	}
-	return (0);
+	free_px(&ppx);
+	print_errors(ppx.errors, ppx.p_name);
+	return (ppx.errors);
 }

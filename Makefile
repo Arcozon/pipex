@@ -13,7 +13,11 @@ S_SRC_HEREDOC =  heredoc.c  heredoc_exp.c  heredoc_no_exp.c
 D_SRC_HEREDOC =  heredoc/
 SRC_HEREDOC =  $(addprefix $(D_SRC_HEREDOC), $(S_SRC_HEREDOC))
 
-SRC =  $(SRC_HEREDOC)  $(SRC_CMDS)  main.c  setup.c  utils2.c  utils.c  error.c  free.c
+S_SRC_UTILS =  error.c  free.c  utils2.c  utils.c
+D_SRC_UTILS =  utils/
+SRC_UTILS =  $(addprefix $(D_SRC_UTILS), $(S_SRC_UTILS))
+
+SRC =  $(SRC_HEREDOC)  $(SRC_CMDS)  $(SRC_UTILS)  main.c  setup.c  exec.c
 D_SRC =  src/
 
 D_INC = inc/

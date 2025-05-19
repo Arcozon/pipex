@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/18 18:56:23 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:19:50 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define PATH_EQ "PATH"
 # define PATH_EQ_LEN 4
 # define HEREDOC "here_doc"
-# define HEREDOC_LEN 8
+# define HEREDOC_LEN sizeof(HEREDOC)
 
 # ifndef PPX_BONUS
 #  define PPX_BONUS 0
@@ -52,7 +52,7 @@ typedef struct s_pipex
 	char			*p_name;
 
 	char			*infile;
-	char			heredoc:1;
+	int			heredoc:1;
 	int				ifd;
 	char			*outfile;
 	int				ofd;
@@ -62,7 +62,7 @@ typedef struct s_pipex
 
 	t_cmd			*cmds;
 
-	int				pipe[2];
+	int				last_in;
 
 	unsigned char	errors;
 }	t_px;
@@ -78,6 +78,12 @@ char	**split_cmd(char *str, char **env);
 int		heredoc_exp(int fdin, char **env, int mlv);
 int		heredoc_no_exp(char *limiter, char *p_name, int *mlv);
 int		heredoc(char *limiter, char *p_name, char **env);
+
+void	exec_cmds(t_px* px);
+int		files_cmd(t_cmd *cmd, t_px *px);
+void	make_a_child(t_cmd *cmd, t_px *px);
+
+void	close_fd(int *fd);
 
 char	**split_cmd(char *str, char **env);
 char	*find_exe(char *exe_name, char *path);
@@ -100,9 +106,12 @@ int		slashchr(char *str);
 void	putstrerr(char *err);
 void	err_expected_delim(char *limiter, char *p_name, int to_print);
 void	err_file(char *f_name, char *p_name);
+void	px_error(char *p_name, char *error);
+void	print_errors(unsigned char errors, char *p_name);
 
 void	free_split(char **split);
 void	free_cmd(t_cmd *cmd);
 void	free_lst_cmd(t_cmd *lst);
+void	free_px(t_px *px);
 
 #endif

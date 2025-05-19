@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:18:05 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/18 15:50:46 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:02:48 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ int	init_pipex(t_px *ppx,int ac,char *av[],char *env[])
 	if (PPX_BONUS)
 		ppx->heredoc = ft_strncmp(av[1], HEREDOC,  HEREDOC_LEN) == 0;
 	ppx->infile = av[1 + ppx->heredoc];
+	ppx->last_in = -1;
+	ppx->ifd = -1;
+	ppx->ofd = -1;
 	ppx->outfile = av[ac - 1];
 	ppx->env = env;
 	ppx->path = find_path(env);
