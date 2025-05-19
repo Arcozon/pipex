@@ -29,7 +29,7 @@ B_D_BUILD = .bonus_build/
 B_OBJ =  $(addprefix $(B_D_BUILD), $(SRC:.c=.o))
 
 CC =  cc
-FLAGS = -Wall -Wextra -Werror -MMD
+FLAGS = -Wall -Wextra -Werror -MMD -g
 B_FLAGS = $(FLAGS) -DPPX_BONSUS=1
 
 RM =  rm -rf

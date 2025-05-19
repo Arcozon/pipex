@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:19:50 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 12:34:06 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <stdio.h>
 # include <errno.h>
+# include <sys/stat.h>
 
 # define PATH_EQ "PATH"
 # define PATH_EQ_LEN 4
