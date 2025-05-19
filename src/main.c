@@ -6,11 +6,25 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:37 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/18 19:00:03 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 08:14:33 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+// 0 on error 1 on succ
+int	open_fd(char *f_name, int *fd, int mode, t_px *px)
+{
+	if (*fd >= 0)
+		close(*fd);
+	*fd = open(f_name, mode);
+	if (fd <= 0)
+	{
+		px->errors |= E_OPEN;
+		err_file(px->p_name, f_name);
+	}
+	return (fd >= 0);
+}
 
 void	open_files(t_px *px)
 {
@@ -29,7 +43,7 @@ void	open_files(t_px *px)
 			err_file(px->infile, px->p_name);
 		}
 	}
-	px->ofd = open(px->outfile, O_WRONLY);
+	px->ofd = open(px->outfile, O_WRONLY); // append for heredoxc mod
 	if (px->ifd < 0)
 	{
 		px->errors |= E_OPEN;
