@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:21:28 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:36:23 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:45:09 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,15 @@ char	*ft_strrchr(char *str, char c)
 	return (0);
 }
 
-char	*ft_substrjoin_with_slash(char *path, char *exe,
-		size_t start, size_t len)
+char	*ft_substrjoin_with_slash(char *path, char *exe, size_t len)
 {
 	char	*res;
 	size_t	i;
 	size_t	j;
 
 	j = ft_strlen(path);
-	if (start > j)
-		start = j;
-	if (start + len > j)
-		len = j - start ;
+	if (len > j)
+		len = j;
 	res = malloc((ft_strlen(exe) + len + 1 + 1) * sizeof(char));
 	if (!res)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:40:46 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:45:19 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(char *str);
 size_t	ft_strlen(char *str);
 char	*ft_strrchr(char *str, char c);
-char	*ft_substrjoin_with_slash(char *path, char *exe,
-			size_t start, size_t len);
+char	*ft_substrjoin_with_slash(char *path, char *exe, size_t len);
 int		slashchr(char *str);
 
 void	putstrerr(char *err);

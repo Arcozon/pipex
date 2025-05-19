@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:48:54 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:43:03 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:44:37 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*find_exe(char *exe_name, char *path, char *p_name)
 			++len;
 		write(2, path + start, len);
 		write(2, "\n\n", 2);
-		res = ft_substrjoin_with_slash(path, exe_name, start, len);
+		res = ft_substrjoin_with_slash(path + start, exe_name, len);
 		// putstrerr(res);
 		if (!res || !access(res, F_OK))
 			return (res);
