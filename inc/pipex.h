@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:34:06 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:40:46 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <errno.h>
 # include <sys/stat.h>
 
-# define PATH_EQ "PATH"
-# define PATH_EQ_LEN 4
+# define PATH_EQ "PATH="
+# define PATH_EQ_LEN 5
 # define HEREDOC "here_doc"
 # define HEREDOC_LEN sizeof(HEREDOC)
 
@@ -87,10 +87,10 @@ void	make_a_child(t_cmd *cmd, t_px *px);
 void	close_fd(int *fd);
 
 char	**split_cmd(char *str, char **env);
-char	*find_exe(char *exe_name, char *path);
+char	*find_exe(char *exe_name, char *path, char *p_name);
 
 int		init_pipex(t_px *ppx,int ac,char *av[],char *env[]);
-t_cmd	*init_cmds(char	**av, size_t nb_cmds, char **env, char *path);
+t_cmd	*init_cmds(char	**av, size_t nb_cmds, t_px *px);
 
 int		is_cmd_sep(char c);
 int		is_var_name(char c);
@@ -100,7 +100,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strdup(char *str);
 size_t	ft_strlen(char *str);
 char	*ft_strrchr(char *str, char c);
-char	*ft_substrjoin_with_slash(char *s1, char *s2,
+char	*ft_substrjoin_with_slash(char *path, char *exe,
 			size_t start, size_t len);
 int		slashchr(char *str);
 
@@ -109,6 +109,7 @@ void	err_expected_delim(char *limiter, char *p_name, int to_print);
 void	err_file(char *f_name, char *p_name);
 void	px_error(char *p_name, char *error);
 void	print_errors(unsigned char errors, char *p_name);
+void	err_cmd_not_found(char *p_name, char *cmd);
 
 void	free_split(char **split);
 void	free_cmd(t_cmd *cmd);

@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:07:06 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:17:06 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:31:30 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 void	putstrerr(char *err)
 {
 	write(2, err, ft_strlen(err));
+}
+
+void	err_cmd_not_found(char *p_name, char *cmd)
+{
+	putstrerr(p_name);
+	putstrerr(": ");
+	putstrerr(cmd);
+	putstrerr(": command not found\n");
 }
 
 void	err_expected_delim(char *limiter, char *p_name, int to_print)

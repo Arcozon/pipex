@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:21:28 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/17 17:14:46 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:36:23 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,32 @@ char	*ft_strrchr(char *str, char c)
 	return (0);
 }
 
-char	*ft_substrjoin_with_slash(char *s1, char *s2,
+char	*ft_substrjoin_with_slash(char *path, char *exe,
 		size_t start, size_t len)
 {
 	char	*res;
 	size_t	i;
 	size_t	j;
 
-	j = ft_strlen(s2);
+	j = ft_strlen(path);
 	if (start > j)
 		start = j;
 	if (start + len > j)
 		len = j - start ;
-	res = malloc((ft_strlen((char *)s1)
-				+ len + 1 + 1) * sizeof(char));
+	res = malloc((ft_strlen(exe) + len + 1 + 1) * sizeof(char));
 	if (!res)
 		return (0);
 	i = 0;
-	while (s1[i])
+	while (i < len)
 	{
-		res[i] = s1[i];
+		res[i] = path[i];
 		++i;
 	}
 	res[i++] = '/';
 	j = 0;
-	while (j < len)
+	while (exe[j])
 	{
-		res[i + j] = s2[j];
+		res[i + j] = exe[j];
 		++j;
 	}
 	res[i + j] = '\0';

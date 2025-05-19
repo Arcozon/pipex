@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:08:07 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:22:04 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/19 13:25:04 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	exec_cmds(t_px* px)
 	{
 		if (!files_cmd(cmd, px))
 			return ;
-		if (cmd->outfd != -1 && cmd->infd != -1 && cmd->path)
+		if (cmd->outfd != -1 && cmd->infd != -1)
 			make_a_child(cmd, px);
 		close_fd(&(cmd->infd));
 		close_fd(&(cmd->outfd));
