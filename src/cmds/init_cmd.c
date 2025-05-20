@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 17:07:10 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/20 11:09:00 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:58:42 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ t_cmd	*new_cmd(char *pre_split, char **env)
 	if (!new->args)
 		return (free(new), (t_cmd *)0);
 	new->path = 0;
-	// new->path = find_exe(new->args[0], path, p_name);
 	return (new);
 }
 

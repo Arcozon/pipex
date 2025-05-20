@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 17:47:47 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:20:49 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:55:22 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	free_split(char **split)
 	i = 0;
 	while (split[i])
 		free(split[i++]);
-	free(split);	
+	free(split);
 }
 
 void	free_cmd(t_cmd *cmd)

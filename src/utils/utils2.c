@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:37:06 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/17 17:45:24 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:54:53 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	if (i == n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+void	putstrerr(char *err)
+{
+	write(2, err, ft_strlen(err));
 }

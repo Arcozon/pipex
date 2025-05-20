@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:37 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/20 11:37:14 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:57:04 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	open_files(t_px *px)
 	else
 		open_fd(px->infile, &(px->ifd), O_RDONLY, px);
 	open_fd(px->outfile, &(px->ofd), O_WRONLY | O_CREAT
-			| (int [2]){O_TRUNC, O_APPEND}[px->heredoc], px);
+		| (int [2]){O_TRUNC, O_APPEND}[px->heredoc], px);
 }
 
 void	exec_pipex(t_px *px)

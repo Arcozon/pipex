@@ -6,16 +6,11 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 13:07:06 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:31:30 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:55:06 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-void	putstrerr(char *err)
-{
-	write(2, err, ft_strlen(err));
-}
 
 void	err_cmd_not_found(char *p_name, char *cmd)
 {
@@ -58,7 +53,8 @@ void	print_errors(unsigned char errors, char *p_name)
 	if (errors & E_MLLC)
 		px_error(p_name, "Malloc error");
 	if (errors & E_HRDC)
-		px_error(p_name, "Heredoc error (Malloc or pipe, shouldnt be read/write)");
+		px_error(p_name, "Heredoc error (Malloc or pipe, shouldnt"
+			"be read/write)");
 	if (errors & E_FORK)
 		px_error(p_name, "Fork error");
 }

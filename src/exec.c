@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:08:07 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/20 11:48:31 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:58:30 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	files_cmd(t_cmd *cmd, t_px *px)
 	}
 	else
 	{
-		// fprintf(stderr, "CACApipi %d\n", px->ofd);
 		cmd->outfd = px->ofd;
 		px->ofd = -1;
 	}
@@ -50,8 +49,8 @@ void	make_a_child(t_cmd *cmd, t_px *px)
 	close_fd(&(px->last_in));
 	close_fd(&(px->ifd));
 	close_fd(&(px->ofd));
-	// fprintf(stderr, "%d, %d, %s\n", cmd->infd, cmd->outfd,  cmd->path);
-	if (dup2(cmd->infd, STDIN_FILENO) >= 0 && dup2(cmd->outfd, STDOUT_FILENO) >= 0)
+	if (dup2(cmd->infd, STDIN_FILENO) >= 0 && dup2(cmd->outfd,
+			STDOUT_FILENO) >= 0)
 	{
 		close_fd(&(cmd->infd));
 		close_fd(&(cmd->outfd));
@@ -62,7 +61,7 @@ void	make_a_child(t_cmd *cmd, t_px *px)
 	exit(E_EXEC);
 }
 
-void	exec_cmds(t_px* px)
+void	exec_cmds(t_px *px)
 {
 	t_cmd	*cmd;
 

@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/20 11:37:45 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:54:14 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int		heredoc_exp(int fdin, char **env, int mlv);
 int		heredoc_no_exp(char *limiter, char *p_name, int *mlv);
 int		heredoc(char *limiter, char *p_name, char **env);
 
-void	exec_cmds(t_px* px);
+void	exec_cmds(t_px *px);
 int		files_cmd(t_cmd *cmd, t_px *px);
 void	make_a_child(t_cmd *cmd, t_px *px);
 
@@ -92,7 +92,7 @@ char	*find_exe(char *exe_name, char *path, char *p_name);
 void	find_exe_cmds(t_cmd *cmds, char *path, char *p_name);
 t_cmd	*init_cmds(char	**av, size_t nb_cmds, t_px *px);
 
-int		init_pipex(t_px *ppx,int ac,char *av[],char *env[]);
+int		init_pipex(t_px *ppx, int ac, char *av[], char *env[]);
 void	wait_childs(t_px *px);
 
 int		is_cmd_sep(char c);
