@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 10:28:16 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/17 16:21:06 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 10:41:23 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	read_var_name(int fdin, int fdout, char *var_name, char **env)
 		br = read(fdin, &c, 1);
 		if (br < 0)
 			return (-1);
-		write(2, &c, 1);
 		if (br == 0 || !is_var_name(c))
 			break ;
 		var_name[lvar] = c;

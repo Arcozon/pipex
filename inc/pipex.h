@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:56 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:45:19 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:37:45 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
-# include <stdio.h>
 # include <errno.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 
 # define PATH_EQ "PATH="
 # define PATH_EQ_LEN 5
 # define HEREDOC "here_doc"
-# define HEREDOC_LEN sizeof(HEREDOC)
+# define HEREDOC_LEN 8
 
 # ifndef PPX_BONUS
-#  define PPX_BONUS 0
+#  define PPX_BONUS 1
 # endif
 
 typedef struct s_cmd	t_cmd;
@@ -53,7 +53,7 @@ typedef struct s_pipex
 	char			*p_name;
 
 	char			*infile;
-	int			heredoc:1;
+	unsigned int	heredoc:1;
 	int				ifd;
 	char			*outfile;
 	int				ofd;
@@ -66,6 +66,7 @@ typedef struct s_pipex
 	int				last_in;
 
 	unsigned char	errors;
+	int				r_value;
 }	t_px;
 
 size_t	len_var_name(char *str);
@@ -88,9 +89,11 @@ void	close_fd(int *fd);
 
 char	**split_cmd(char *str, char **env);
 char	*find_exe(char *exe_name, char *path, char *p_name);
+void	find_exe_cmds(t_cmd *cmds, char *path, char *p_name);
+t_cmd	*init_cmds(char	**av, size_t nb_cmds, t_px *px);
 
 int		init_pipex(t_px *ppx,int ac,char *av[],char *env[]);
-t_cmd	*init_cmds(char	**av, size_t nb_cmds, t_px *px);
+void	wait_childs(t_px *px);
 
 int		is_cmd_sep(char c);
 int		is_var_name(char c);

@@ -1,5 +1,5 @@
 NAME =  pipex
-B_NAME = pipex_bonus
+NB_NAME = pipex_nobonus
 
 S_SRC_SPLIT_CMD =  cpy_arg.c  len_dollar.c  len_one_arg.c  mllc_all.c
 D_SRC_SPLIT_CMD =  split_cmd/
@@ -25,12 +25,12 @@ D_INC = inc/
 D_BUILD = .build/
 OBJ =  $(addprefix $(D_BUILD), $(SRC:.c=.o))
 
-B_D_BUILD = .bonus_build/
-B_OBJ =  $(addprefix $(B_D_BUILD), $(SRC:.c=.o))
+NB_D_BUILD = .nobonus_build/
+NB_OBJ =  $(addprefix $(NB_D_BUILD), $(SRC:.c=.o))
 
 CC =  cc
 FLAGS = -Wall -Wextra -Werror -MMD -g
-B_FLAGS = $(FLAGS) -DPPX_BONSUS=1
+NB_FLAGS = $(FLAGS) -DPPX_BONUS=0
 
 RM =  rm -rf
 
@@ -43,26 +43,26 @@ $(OBJ): $(D_BUILD)%.o:	$(D_SRC)%.c
 	@mkdir -p $(@D)
 	$(CC) $(FLAGS) -I$(D_INC) -c $< -o $@
 
-bonus: $(B_NAME)
+nobonus: $(NB_NAME)
 
-$(B_NAME):	$(B_OBJ)
+$(NB_NAME):	$(NB_OBJ)
 	$(CC) -o$@ $^
 
-$(B_OBJ): $(B_D_BUILD)%.o:	$(D_SRC)%.c
+$(NB_OBJ): $(NB_D_BUILD)%.o:	$(D_SRC)%.c
 	@mkdir -p $(@D)
-	$(CC) $(B_FLAGS) -I$(D_INC) -c $< -o $@
+	$(CC) $(NB_FLAGS) -I$(D_INC) -c $< -o $@
 
 clean:
-	$(RM) $(D_BUILD) $(B_D_BUILD)
+	$(RM) $(D_BUILD) $(NB_D_BUILD)
 
 fclean: clean
-	$(RM) $(NAME) $(B_NAME)
+	$(RM) $(NAME) $(NB_NAME)
 
 re: fclean
 	make all
 
 DEPS = $(addprefix $(D_BUILD), $(SRC:.c=.d))
-B_DEPS = $(addprefix $(B_D_BUILD), $(SRC:.c=.d))
--include $(DEPS) $(B_DEPS)
+NB_DEPS = $(addprefix $(NB_D_BUILD), $(SRC:.c=.d))
+-include $(DEPS) $(NB_DEPS)
 
-.PHONY: re fclean clean all bonus $(CC) $(FLAGS) $(B_FLAGS) $(RM)
+.PHONY: re fclean clean all nobonus $(CC) $(FLAGS) $(B_FLAGS) $(RM)

@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 11:08:07 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:25:04 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:48:31 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int	files_cmd(t_cmd *cmd, t_px *px)
 	}
 	else
 	{
+		// fprintf(stderr, "CACApipi %d\n", px->ofd);
 		cmd->outfd = px->ofd;
-		close_fd(&(px->ofd));
+		px->ofd = -1;
 	}
 	return (1);
 }
@@ -46,7 +47,11 @@ void	make_a_child(t_cmd *cmd, t_px *px)
 		px->errors |= E_FORK;
 	if (cmd->pid != 0)
 		return ;
-	if (dup2(cmd->infd, STDIN_FILENO) >= 0 || dup2(cmd->outfd, STDOUT_FILENO) >= 0)
+	close_fd(&(px->last_in));
+	close_fd(&(px->ifd));
+	close_fd(&(px->ofd));
+	// fprintf(stderr, "%d, %d, %s\n", cmd->infd, cmd->outfd,  cmd->path);
+	if (dup2(cmd->infd, STDIN_FILENO) >= 0 && dup2(cmd->outfd, STDOUT_FILENO) >= 0)
 	{
 		close_fd(&(cmd->infd));
 		close_fd(&(cmd->outfd));
@@ -66,10 +71,29 @@ void	exec_cmds(t_px* px)
 	{
 		if (!files_cmd(cmd, px))
 			return ;
-		if (cmd->outfd != -1 && cmd->infd != -1)
+		if (cmd->outfd != -1 && cmd->infd != -1 && cmd->path)
 			make_a_child(cmd, px);
 		close_fd(&(cmd->infd));
 		close_fd(&(cmd->outfd));
 		cmd = cmd->next;
+	}
+}
+
+void	wait_childs(t_px *px)
+{
+	t_cmd	*lcmd;
+	int		r_value;
+
+	lcmd = px->cmds;
+	px->r_value = px->errors;
+	while (lcmd)
+	{
+		if (lcmd->pid > 0)
+		{
+			waitpid(lcmd->pid, &r_value, 0);
+			if (!lcmd->next)
+				px->r_value = r_value;
+		}
+		lcmd = lcmd->next;
 	}
 }

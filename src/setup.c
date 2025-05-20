@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 16:18:05 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 13:40:49 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 10:39:16 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	check_nb_args(int ac, char *av[])
 int	init_pipex(t_px *ppx,int ac,char *av[],char *env[])
 {
 	ppx->errors = 0;
+	ppx->r_value = 0;
 	ppx->last_in = -1;
 	ppx->ifd = -1;
 	ppx->ofd = -1;
@@ -54,7 +55,7 @@ int	init_pipex(t_px *ppx,int ac,char *av[],char *env[])
 	if (!check_nb_args(ac, av))
 		return (ppx->errors |= E_ARGS, 1);
 	if (PPX_BONUS)
-		ppx->heredoc = ft_strncmp(av[1], HEREDOC,  HEREDOC_LEN) == 0;
+		ppx->heredoc = (ft_strncmp(av[1], HEREDOC,  HEREDOC_LEN) == 0);
 	ppx->infile = av[1 + ppx->heredoc];
 	ppx->cmds = init_cmds(av + 2 + ppx->heredoc, ac - 3 - ppx->heredoc, ppx);
 	if (!ppx->cmds)

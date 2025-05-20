@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 15:27:37 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/19 12:36:36 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/20 11:37:14 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	open_fd(char *f_name, int *fd, int mode, t_px *px)
 	if (*fd >= 0)
 		close(*fd);
 	*fd = open(f_name, mode, S_IRUSR | S_IRGRP | S_IROTH | S_IWUSR);
-	if (fd <= 0)
+	if (*fd < 0)
 	{
 		px->errors |= E_OPEN;
-		err_file(px->p_name, f_name);
+		err_file(f_name, px->p_name);
 	}
-	return (fd >= 0);
+	return (*fd >= 0);
 }
 
 void	open_files(t_px *px)
@@ -52,7 +52,9 @@ void	open_files(t_px *px)
 void	exec_pipex(t_px *px)
 {
 	open_files(px);
+	find_exe_cmds(px->cmds, px->path, px->p_name);
 	exec_cmds(px);
+	wait_childs(px);
 }
 
 int	main(int ac, char *av[], char *env[])
@@ -63,5 +65,5 @@ int	main(int ac, char *av[], char *env[])
 		exec_pipex(&ppx);
 	free_px(&ppx);
 	print_errors(ppx.errors, ppx.p_name);
-	return (ppx.errors);
+	return (ppx.r_value);
 }
