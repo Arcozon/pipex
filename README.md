@@ -1,4 +1,4 @@
-Almost a perfect Pipex.
+Almost a decent Pipex (only expansion is cool, and i dont expand file name idk why).
 Variable, single and double quote expansion for commands
 Single and double quote expansion for heredoc limiter
 NoMalloc, NoTmpFile heredoc for no expansion
