@@ -6,7 +6,7 @@
 /*   By: gaeudes <gaeudes@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 16:48:54 by gaeudes           #+#    #+#             */
-/*   Updated: 2025/05/20 11:58:56 by gaeudes          ###   ########.fr       */
+/*   Updated: 2025/05/25 11:19:34 by gaeudes          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ char	*find_exe(char *exe_name, char *path, char *p_name)
 	size_t	start;
 	size_t	len;
 
-	if (!path || slashchr(exe_name))
+	if (!exe_name || !path || slashchr(exe_name))
 	{
-		if (!access(exe_name, F_OK))
+		if (exe_name && !access(exe_name, F_OK))
 			return (ft_strdup(exe_name));
 		return (err_file(exe_name, p_name), (char *)0);
 	}
